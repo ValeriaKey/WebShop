@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.31727.386
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShop", "WebShop\WebShop.csproj", "{4B655711-8BD9-4881-8A59-7CBFA1BD02CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShop.Core", "WebShop.Core\WebShop.Core.csproj", "{5F5EF5ED-2AA4-4797-BD57-6914CA296D28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShop.Core", "WebShop.Core\WebShop.Core.csproj", "{5F5EF5ED-2AA4-4797-BD57-6914CA296D28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShop.Data", "WebShop.Data\WebShop.Data.csproj", "{7DD0F187-0AD1-4334-B204-53EE5E282DBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShop.Data", "WebShop.Data\WebShop.Data.csproj", "{7DD0F187-0AD1-4334-B204-53EE5E282DBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShop.ApplicationServices", "WebShop.ApplicationServices\WebShop.ApplicationServices.csproj", "{4E00ED87-362A-4132-B76C-45F9C4C1414E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShop.ApplicationServices", "WebShop.ApplicationServices\WebShop.ApplicationServices.csproj", "{4E00ED87-362A-4132-B76C-45F9C4C1414E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
