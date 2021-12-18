@@ -10,11 +10,11 @@ using WebShop.Data;
 
 namespace WebShop.ApplicationServices.Services
 {
-    public class ProductServices : IProductService
+    public class CarService : ICarService
     {
         private readonly WebShopDbContext _context;
 
-        public ProductServices
+        public CarService
             (
                 WebShopDbContext context
             )
@@ -22,15 +22,15 @@ namespace WebShop.ApplicationServices.Services
             _context = context;
         }
 
-        public async Task<Product> Delete(Guid id)
+        public async Task<Car> Delete(Guid id)
         {
-            var productId = await _context.Product
+            var carId = await _context.Car
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            _context.Product.Remove(productId);
+            _context.Car.Remove(carId);
             await _context.SaveChangesAsync();
 
-            return productId;
+            return carId;
         }
     }
 }
