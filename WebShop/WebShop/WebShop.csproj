@@ -14,6 +14,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\WebShop.Data\WebShop.Data.csproj" />
+		<ProjectReference Include="..\WebShop.Core\WebShop.Core.csproj" />
 	</ItemGroup>
 
 </Project>

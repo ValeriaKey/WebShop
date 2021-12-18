@@ -17,13 +17,14 @@
         <tbody>
             @foreach (var product in Model)
             {
-<tr>
-    <td class=""></td>
-    <td class=""></td>
-    <td class=""></td>
-    <td class=""></td>
-    <td class=""></td>
-</tr>            }
-        </tbody>
+        <tr>
+            <td class=""></td>
+            <td class="">@product.Name</td>
+            <td class="">@product.Description</td>
+            <td class="">@product.Price</td>
+            <td class="">@product.Amount</td>
+        </tr>
+            }
+                    </tbody>
     </table>
 </form>
