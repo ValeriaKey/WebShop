@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebShop.Data;
 using WebShop.Core;
+using WebShop.Core.ServiceInterface;
+using WebShop.ApplicationServices.Services;
 
 namespace WebShop
 {
@@ -30,6 +32,7 @@ namespace WebShop
 
             services.AddDbContext<WebShopDbContext>(options =>
                 options.UseSqlServer(_config["DefaultConnection"]));
+            services.AddScoped<IProductService, ProductServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
