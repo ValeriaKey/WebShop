@@ -31,11 +31,8 @@ namespace WebShop.ApplicationServices.Services
 
             return productId;
 
-<<<<<<< HEAD
-=======
         }
 
->>>>>>> 78022f2 (EditAndUpdateProduct ( Controller ))
         public async Task<Product> Add(ProductDto dto)
         {
             Product product = new Product();
