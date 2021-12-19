@@ -38,22 +38,48 @@ namespace WebShop.ApplicationServices.Services
 
         public async Task<Car> Add(CarDto dto)
         {
-            var domain = new Car()
-            {
-                Id = dto.Id,
-                Description = dto.Description,
-                Brand = dto.Brand,
-                Moodel = dto.Moodel,
-                Amount = dto.Amount,
-                Price = dto.Price,
-                ModifiedAt = dto.ModifiedAt,
-                CreatedAt = dto.CreatedAt
-            };
+            Car car = new Car();
 
-            await _context.Car.AddAsync(domain);
+            car.Id = dto.Id;
+            car.Description = dto.Description;
+            car.Brand = dto.Brand;
+            car.Moodel = dto.Moodel;
+            car.Amount = dto.Amount;
+            car.Price = dto.Price;
+            car.ModifiedAt = DateTime.Now;
+            car.CreatedAt = DateTime.Now;
+
+            await _context.Car.AddAsync(car);
             await _context.SaveChangesAsync();
 
-            return domain;
+            return car;
+        }
+
+        public async Task<Car> Edit(Guid id)
+        {
+            var result = await _context.Car
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+
+        public async Task<Car> Update(CarDto dto)
+        {
+            Car car = new Car();
+
+            car.Id = dto.Id;
+            car.Description = dto.Description;
+            car.Brand = dto.Brand;
+            car.Moodel = dto.Moodel;
+            car.Amount = dto.Amount;
+            car.Price = dto.Price;
+            car.ModifiedAt = dto.ModifiedAt;
+            car.CreatedAt = dto.CreatedAt;
+
+            _context.Car.Update(car);
+            await _context.SaveChangesAsync();
+
+            return car;
         }
     }
 }

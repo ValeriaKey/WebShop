@@ -1,5 +1,10 @@
 ﻿@model WebShop.Models.Car.CarViewModel
-
+@if (Model.Id.HasValue)
+{
+<h1>Update</h1> }
+            else
+            {
+<h1>Add</h1>}
 
 <div>
     <form method="post" enctype="multipart/form-data">
@@ -39,14 +44,13 @@
             </div>
         </div>
 
-        @*@if (Model.Id.HasValue)
-            {*@
-        <input asp-action="edit" asp-controller="car" type="submit" class="btn btn-primary" value="Update">
-        <input asp-action="delete" asp-controller="car" asp-for="Id" type="submit" class="btn btn-danger" value="Delete">
-        @*else
-            {*@
-        <input asp-action="add" asp-controller="car" type="submit" class="btn btn-primary" value="Add">
-        @*}*@
+        @if (Model.Id.HasValue)
+        {
+            <input asp-action="update" asp-controller="car" type="submit" class="btn btn-primary" value="Update">
+            <input asp-action="delete" asp-controller="car" asp-for="Id" type="submit" class="btn btn-danger" value="Delete"> }
+        else
+        {
+            <input asp-action="add" asp-controller="car" type="submit" class="btn btn-primary" value="Add">}
         <a asp-action="index" class="btn btn-primary">Index</a>
 
     </form>

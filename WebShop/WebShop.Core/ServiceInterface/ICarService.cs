@@ -12,5 +12,9 @@ namespace WebShop.Core.ServiceInterface
     {
         Task<Car> Delete(Guid id);
         Task<Car> Add(CarDto dto);
+
+        Task<Car> Edit(Guid id);
+
+        Task<Car> Update(CarDto dto);
     }
 }

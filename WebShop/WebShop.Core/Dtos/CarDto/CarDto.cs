@@ -8,7 +8,7 @@ namespace WebShop.Core.Dtos.CarDto
 {
     public class CarDto
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         public string Brand { get; set; }
         public string Moodel { get; set; }
         public string Description { get; set; }

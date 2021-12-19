@@ -65,7 +65,7 @@ namespace WebShop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CarViewModel model)
+        public async Task<IActionResult> Add(CarListViewModel model)
         {
             var dto = new CarDto()
             {
@@ -86,6 +86,52 @@ namespace WebShop.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var product = await _carService.Edit(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var model = new CarViewModel();
+
+            model.Id = product.Id;
+            model.Description = product.Description;
+            model.Brand = product.Brand;
+            model.Moodel = product.Moodel;
+            model.Amount = product.Amount;
+            model.Price = product.Price;
+            model.ModifiedAt = product.ModifiedAt;
+            model.CreatedAt = product.CreatedAt;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(CarViewModel model)
+        {
+            var dto = new CarDto()
+            {
+                Id = model.Id,
+                Description = model.Description,
+                Brand = model.Brand,
+                Moodel = model.Moodel,
+                Amount = model.Amount,
+                Price = model.Price,
+                ModifiedAt = model.ModifiedAt,
+                CreatedAt = model.CreatedAt
+            };
+
+            var result = await _carService.Update(dto);
+
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index), model);
         }
     }
     }
