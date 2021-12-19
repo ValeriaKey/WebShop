@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebShop.Core.Domain;
+using WebShop.Core.Dtos.CarDto;
+using WebShop.Core.Dtos.ProductDto;
 using WebShop.Core.ServiceInterface;
 using WebShop.Data;
 
@@ -31,6 +33,27 @@ namespace WebShop.ApplicationServices.Services
             await _context.SaveChangesAsync();
 
             return carId;
+        }
+
+
+        public async Task<Car> Add(CarDto dto)
+        {
+            var domain = new Car()
+            {
+                Id = dto.Id,
+                Description = dto.Description,
+                Brand = dto.Brand,
+                Moodel = dto.Moodel,
+                Amount = dto.Amount,
+                Price = dto.Price,
+                ModifiedAt = dto.ModifiedAt,
+                CreatedAt = dto.CreatedAt
+            };
+
+            await _context.Car.AddAsync(domain);
+            await _context.SaveChangesAsync();
+
+            return domain;
         }
     }
 }

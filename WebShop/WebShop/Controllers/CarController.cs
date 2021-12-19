@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebShop.Core.Dtos.CarDto;
 using WebShop.Core.ServiceInterface;
 using WebShop.Data;
 using WebShop.Models.Car;
@@ -46,7 +47,45 @@ namespace WebShop.Controllers
                 var car = await _carService.Delete(id);
 
 
-                return RedirectToAction(nameof(Index), null);
+            if (car == null)
+            {
+                RedirectToAction(nameof(Index));
             }
+
+
+            return RedirectToAction(nameof(Index), car);
+            }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            CarViewModel model = new CarViewModel();
+
+            return View("Edit", model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(CarViewModel model)
+        {
+            var dto = new CarDto()
+            {
+                Id = model.Id,
+                Description = model.Description,
+                Brand = model.Brand,
+                Moodel = model.Moodel,
+                Amount = model.Amount,
+                Price = model.Price,
+                ModifiedAt = model.ModifiedAt,
+                CreatedAt = model.CreatedAt
+            };
+
+            var result = await _carService.Add(dto);
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction("Index");
+        }
+    }
     }

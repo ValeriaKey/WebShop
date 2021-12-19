@@ -33,8 +33,7 @@ namespace WebShop.ApplicationServices.Services
 
             return productId;
         }
-<<<<<<< HEAD
-=======
+
 
         public async Task<Product> Add(ProductDto dto)
         {
@@ -55,6 +54,5 @@ namespace WebShop.ApplicationServices.Services
             return domain;
         }
 
->>>>>>> master
     }
 }
