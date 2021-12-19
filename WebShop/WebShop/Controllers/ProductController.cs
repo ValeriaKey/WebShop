@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using WebShop.Core.ServiceInterface;
 using WebShop.Data;
 using WebShop.Models.Product;
+using WebShop.Core.Dtos;
+using WebShop.Core.Dtos.ProductDto;
 
 namespace WebShop.Controllers
 {
@@ -44,8 +46,43 @@ namespace WebShop.Controllers
         {
             var product = await _productService.Delete(id);
 
+            if (product == null)
+            {
+                RedirectToAction(nameof(Index));
+            }
 
-            return RedirectToAction(nameof(Index), null);
+            return RedirectToAction(nameof(Index), product);
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            ProductViewModel model = new ProductViewModel();
+
+            return View("Edit", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(ProductViewModel model)
+        {
+            var dto = new ProductDto()
+            {
+                Id = model.Id,
+                Description = model.Description,
+                Name = model.Name,
+                Amount = model.Amount,
+                Price = model.Price,
+                ModifiedAt = model.ModifiedAt,
+                CreatedAt = model.CreatedAt
+            };
+
+            var result = await _productService.Add(dto);
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
