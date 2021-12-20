@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.IO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +9,24 @@ using WebShop.Core.Domain;
 using WebShop.Core.Dtos.ProductDto;
 using WebShop.Core.ServiceInterface;
 using WebShop.Data;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebShop.ApplicationServices.Services
 {
     public class ProductServices : IProductService
     {
         private readonly WebShopDbContext _context;
+        private readonly IWebHostEnvironment _env;
+
         public ProductServices
             (
-            WebShopDbContext context
+            WebShopDbContext context,
+            IWebHostEnvironment env
             )
         {
             _context = context;
+            _env = env;
         }
         public async Task<Product> Delete(Guid id)
         {
@@ -37,13 +44,14 @@ namespace WebShop.ApplicationServices.Services
         {
             Product product = new Product();
 
-            product.Id = dto.Id;
+            product.Id = Guid.NewGuid();
             product.Description = dto.Description;
             product.Name = dto.Name;
             product.Amount = dto.Amount;
             product.Price = dto.Price;
             product.ModifiedAt = DateTime.Now;
             product.CreatedAt = DateTime.Now;
+            ProcessUploadedFile(dto, product);
 
             await _context.Product.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -75,6 +83,43 @@ namespace WebShop.ApplicationServices.Services
             await _context.SaveChangesAsync();
 
             return product;
+        }
+
+        public string ProcessUploadedFile(ProductDto dto, Product product)
+        {
+            string uniqueFileName = null;
+
+            if (dto.Files != null && dto.Files.Count > 0)
+            {
+
+                if (!Directory.Exists(_env.WebRootPath + "\\multipleFileUpload\\"))
+                {
+                    Directory.CreateDirectory(_env.WebRootPath + "\\multipleFileUpload\\");
+                }
+
+                foreach (var photo in dto.Files)
+                {
+                    string uploadsFolder = Path.Combine(_env.WebRootPath, "multipleFileUpload");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        photo.CopyTo(fileStream);
+
+                        ExistingFilePath paths = new ExistingFilePath
+                        {
+                            Id = Guid.NewGuid(),
+                            FilePath = uniqueFileName,
+                            ProductId = product.Id
+                        };
+
+                        _context.ExistingFilePath.Add(paths);
+                    }
+                }
+
+            }
+            return uniqueFileName;
         }
     }
 }

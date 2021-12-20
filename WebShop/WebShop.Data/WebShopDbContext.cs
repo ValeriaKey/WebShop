@@ -13,5 +13,6 @@ namespace WebShop.Data
             : base(options) { }
 
         public DbSet<Product> Product { get; set; }
+        public DbSet<ExistingFilePath> ExistingFilePath { get; set; }
     }
 }
