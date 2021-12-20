@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebShop.Core.Dtos;
 using WebShop.Core.Dtos.CarDto;
 using WebShop.Core.ServiceInterface;
 using WebShop.Data;
@@ -76,7 +77,15 @@ namespace WebShop.Controllers
                 Amount = model.Amount,
                 Price = model.Price,
                 ModifiedAt = model.ModifiedAt,
-                CreatedAt = model.CreatedAt
+                CreatedAt = model.CreatedAt,
+                Files = model.Files,
+                ExistingFilePathsForCar = model.ExistingFilePathsForCar
+                    .Select(x => new ExistingFilePathForCarDto
+                    {
+                        PhotoId = x.PhotoId,
+                        FilePath = x.FilePath,
+                        CarId = x.CarId
+                    }).ToArray()
             };
 
             var result = await _carService.Add(dto);

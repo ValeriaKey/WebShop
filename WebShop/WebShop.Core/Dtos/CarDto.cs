@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,8 @@ namespace WebShop.Core.Dtos.CarDto
         public int Amount { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
+        public List<IFormFile> Files { get; set; }
+
+        public IEnumerable<ExistingFilePathForCarDto> ExistingFilePathsForCar { get; set; } = new List<ExistingFilePathForCarDto>();
     }
 }

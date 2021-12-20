@@ -16,5 +16,7 @@ namespace WebShop.Data
         public DbSet<Car> Car { get; set; }
 
         public DbSet<ExistingFilePath> ExistingFilePath { get; set; }
+
+        public DbSet<ExistingFilePathForCar> ExistingFilePathForCar { get; set; }
     }
 }

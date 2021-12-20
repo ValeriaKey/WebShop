@@ -16,5 +16,6 @@ namespace WebShop.Core.Domain
         public int Amount { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
+        public IEnumerable<ExistingFilePathForCar> ExistingFilePathsForCar { get; set; } = new List<ExistingFilePathForCar>();
     }
 }
