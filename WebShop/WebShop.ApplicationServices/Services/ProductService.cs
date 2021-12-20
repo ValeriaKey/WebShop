@@ -11,6 +11,7 @@ using WebShop.Core.ServiceInterface;
 using WebShop.Data;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
+using WebShop.Core.Dtos;
 
 namespace WebShop.ApplicationServices.Services
 {
@@ -31,6 +32,7 @@ namespace WebShop.ApplicationServices.Services
         public async Task<Product> Delete(Guid id)
         {
             var productId = await _context.Product
+                .Include(x => x.ExistingFilePaths)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             _context.Product.Remove(productId);
@@ -120,6 +122,17 @@ namespace WebShop.ApplicationServices.Services
 
             }
             return uniqueFileName;
+        }
+
+        public async Task<ExistingFilePath> RemoveImage(ExistingFilePathDto dto)
+        {
+            var imageId = await _context.ExistingFilePath
+                .FirstOrDefaultAsync(x => x.Id == dto.PhotoId);
+
+            _context.ExistingFilePath.Remove(imageId);
+            await _context.SaveChangesAsync();
+
+            return imageId;
         }
     }
 }
