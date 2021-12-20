@@ -13,32 +13,18 @@ namespace WebShop.Data.Migrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
             modelBuilder.Entity("WebShop.Core.Domain.ExistingFilePath", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ExistingFilePath");
-                });
-
-            modelBuilder.Entity("WebShop.Core.Domain.Product", b =>
+            modelBuilder.Entity("WebShop.Core.Domain.Car", b =>
                 {
                     b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,6 +32,9 @@ namespace WebShop.Data.Migrations
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -56,7 +45,7 @@ namespace WebShop.Data.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Moodel")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
@@ -64,21 +53,71 @@ namespace WebShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Car");
+                    modelBuilder.Entity("WebShop.Core.Domain.ExistingFilePath", b =>
+                        {
+                            b.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b.Property<string>("FilePath")
+                                .HasColumnType("nvarchar(max)");
+
+                            b.Property<Guid?>("ProductId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b.HasKey("Id");
+
+                            b.HasIndex("ProductId");
+
+
+                    b.ToTable("ExistingFilePath");
                 });
 
-            modelBuilder.Entity("WebShop.Core.Domain.ExistingFilePath", b =>
-                {
-                    b.HasOne("WebShop.Core.Domain.Product", null)
-                        .WithMany("ExistingFilePaths")
-                        .HasForeignKey("ProductId");
-                });
+                            b.ToTable("ExistingFilePath");
 
-            modelBuilder.Entity("WebShop.Core.Domain.Product", b =>
-                {
-                    b.Navigation("ExistingFilePaths");
+                        });
+
+                    modelBuilder.Entity("WebShop.Core.Domain.Product", b =>
+                        {
+                            b.Property<Guid?>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b.Property<int>("Amount")
+                                .HasColumnType("int");
+
+                            b.Property<DateTime>("CreatedAt")
+                                .HasColumnType("datetime2");
+
+                            b.Property<string>("Description")
+                                .HasColumnType("nvarchar(max)");
+
+                            b.Property<DateTime>("ModifiedAt")
+                                .HasColumnType("datetime2");
+
+                            b.Property<string>("Name")
+                                .HasColumnType("nvarchar(max)");
+
+                            b.Property<double>("Price")
+                                .HasColumnType("float");
+
+                            b.HasKey("Id");
+
+                            b.ToTable("Product");
+                        });
+
+                    modelBuilder.Entity("WebShop.Core.Domain.ExistingFilePath", b =>
+                        {
+                            b.HasOne("WebShop.Core.Domain.Product", null)
+                                .WithMany("ExistingFilePaths")
+                                .HasForeignKey("ProductId");
+                        });
+
+                    modelBuilder.Entity("WebShop.Core.Domain.Product", b =>
+                        {
+                            b.Navigation("ExistingFilePaths");
+                        });
                 });
-#pragma warning restore 612, 618
-        }
-    }
+        } }
 }
