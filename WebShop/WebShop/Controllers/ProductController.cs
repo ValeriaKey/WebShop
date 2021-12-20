@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using WebShop.Data;
 using WebShop.Models.Product;
 using WebShop.Core.Dtos;
 using WebShop.Core.Dtos.ProductDto;
+using WebShop.Models.Files;
 
 namespace WebShop.Controllers
 {
@@ -71,6 +73,14 @@ namespace WebShop.Controllers
                 Price = model.Price,
                 ModifiedAt = model.ModifiedAt,
                 CreatedAt = model.CreatedAt,
+                Files = model.Files,
+                ExistingFilePaths = model.ExistingFilePaths
+                    .Select(x => new ExistingFilePathDto
+                    {
+                        PhotoId = x.PhotoId,
+                        FilePath = x.FilePath,
+                        ProductId = x.ProductId
+                    }).ToArray()
             };
 
             var result = await _productService.Add(dto);
@@ -89,6 +99,12 @@ namespace WebShop.Controllers
             {
                 return NotFound();
             }
+            var photos = await _context.ExistingFilePath.Where(x => x.ProductId == id).Select(y => new ExistingFilePathViewModel
+            {
+                FilePath = y.FilePath,
+                PhotoId = y.Id
+            })
+               .ToArrayAsync();
 
             var model = new ProductViewModel();
 
@@ -99,6 +115,7 @@ namespace WebShop.Controllers
             model.Price = product.Price;
             model.ModifiedAt = product.ModifiedAt;
             model.CreatedAt = product.CreatedAt;
+            model.ExistingFilePaths.AddRange(photos);
 
             return View(model);
         }
