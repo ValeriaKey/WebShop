@@ -13,10 +13,8 @@ namespace WebShop.Data
             : base(options) { }
 
         public DbSet<Product> Product { get; set; }
-<<<<<<< HEAD
         public DbSet<Car> Car { get; set; }
-=======
+
         public DbSet<ExistingFilePath> ExistingFilePath { get; set; }
->>>>>>> 745773d (FileSystemModel + FileUploadGet)
     }
 }
