@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebShop.Core.Domain;
+using WebShop.Core.Dtos;
 using WebShop.Core.Dtos.CarDto;
 
 namespace WebShop.Core.ServiceInterface
@@ -16,5 +17,7 @@ namespace WebShop.Core.ServiceInterface
         Task<Car> Edit(Guid id);
 
         Task<Car> Update(CarDto dto);
+
+        Task<ExistingFilePathForCar> RemoveImage(ExistingFilePathForCarDto dto);
     }
 }

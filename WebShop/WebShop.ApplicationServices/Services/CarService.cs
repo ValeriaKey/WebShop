@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebShop.Core.Domain;
+using WebShop.Core.Dtos;
 using WebShop.Core.Dtos.CarDto;
 using WebShop.Core.Dtos.ProductDto;
 using WebShop.Core.ServiceInterface;
@@ -32,7 +33,9 @@ namespace WebShop.ApplicationServices.Services
         public async Task<Car> Delete(Guid id)
         {
             var carId = await _context.Car
+                .Include(x => x.ExistingFilePathsForCar)
                 .FirstOrDefaultAsync(x => x.Id == id);
+
 
             _context.Car.Remove(carId);
             await _context.SaveChangesAsync();
@@ -123,6 +126,17 @@ namespace WebShop.ApplicationServices.Services
 
             }
             return uniqueFileName;
+        }
+
+        public async Task<ExistingFilePathForCar> RemoveImage(ExistingFilePathForCarDto dto)
+        {
+            var imageId = await _context.ExistingFilePathForCar
+                .FirstOrDefaultAsync(x => x.Id == dto.PhotoId);
+
+            _context.ExistingFilePathForCar.Remove(imageId);
+            await _context.SaveChangesAsync();
+
+            return imageId;
         }
     }
 }

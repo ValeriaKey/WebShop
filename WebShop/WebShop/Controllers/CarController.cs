@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using WebShop.Core.Dtos.CarDto;
 using WebShop.Core.ServiceInterface;
 using WebShop.Data;
 using WebShop.Models.Car;
+using WebShop.Models.Files;
 
 namespace WebShop.Controllers
 {
@@ -54,8 +56,8 @@ namespace WebShop.Controllers
             }
 
 
-            return RedirectToAction(nameof(Index), car);
-            }
+            return RedirectToAction(nameof(Index));
+        }
 
         [HttpGet]
         public IActionResult Add()
@@ -99,22 +101,28 @@ namespace WebShop.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var product = await _carService.Edit(id);
-            if (product == null)
+            var car = await _carService.Edit(id);
+            if (car == null)
             {
                 return NotFound();
             }
-
+            var photos = await _context.ExistingFilePathForCar.Where(x => x.CarId == id).Select(y => new ExistingFilePathForCarViewModel
+            {
+                FilePath = y.FilePath,
+                PhotoId = y.Id
+            })
+               .ToArrayAsync();
             var model = new CarViewModel();
 
-            model.Id = product.Id;
-            model.Description = product.Description;
-            model.Brand = product.Brand;
-            model.Moodel = product.Moodel;
-            model.Amount = product.Amount;
-            model.Price = product.Price;
-            model.ModifiedAt = product.ModifiedAt;
-            model.CreatedAt = product.CreatedAt;
+            model.Id = car.Id;
+            model.Description = car.Description;
+            model.Brand = car.Brand;
+            model.Moodel = car.Moodel;
+            model.Amount = car.Amount;
+            model.Price = car.Price;
+            model.ModifiedAt = car.ModifiedAt;
+            model.CreatedAt = car.CreatedAt;
+            model.ExistingFilePathsForCar.AddRange(photos);
 
             return View(model);
         }
@@ -131,7 +139,15 @@ namespace WebShop.Controllers
                 Amount = model.Amount,
                 Price = model.Price,
                 ModifiedAt = model.ModifiedAt,
-                CreatedAt = model.CreatedAt
+                CreatedAt = model.CreatedAt,
+                Files = model.Files,
+                ExistingFilePathsForCar = model.ExistingFilePathsForCar
+                    .Select(x => new ExistingFilePathForCarDto
+                    {
+                        PhotoId = x.PhotoId,
+                        FilePath = x.FilePath,
+                        CarId = x.CarId
+                    }).ToArray()
             };
 
             var result = await _carService.Update(dto);
@@ -141,6 +157,23 @@ namespace WebShop.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index), model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveImage(ExistingFilePathForCarViewModel model)
+        {
+            var dto = new ExistingFilePathForCarDto()
+            {
+                PhotoId = model.PhotoId
+            };
+
+            var image = await _carService.RemoveImage(dto);
+            if (image == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
     }
