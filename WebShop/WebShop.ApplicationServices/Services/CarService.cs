@@ -84,6 +84,7 @@ namespace WebShop.ApplicationServices.Services
             car.Price = dto.Price;
             car.ModifiedAt = dto.ModifiedAt;
             car.CreatedAt = dto.CreatedAt;
+            ProcessUploadedFile(dto, car);
 
             _context.Car.Update(car);
             await _context.SaveChangesAsync();

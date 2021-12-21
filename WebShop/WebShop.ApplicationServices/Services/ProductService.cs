@@ -80,6 +80,7 @@ namespace WebShop.ApplicationServices.Services
             product.Price = dto.Price;
             product.ModifiedAt = dto.ModifiedAt;
             product.CreatedAt = dto.CreatedAt;
+            ProcessUploadedFile(dto, product);
 
             _context.Product.Update(product);
             await _context.SaveChangesAsync();

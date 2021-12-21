@@ -148,8 +148,10 @@ namespace WebShop.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+
             return RedirectToAction(nameof(Index), model);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> RemoveImage(ExistingFilePathViewModel model)
