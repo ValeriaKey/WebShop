@@ -9,7 +9,7 @@ using WebShop.Core.Dtos.CarDto;
 
 namespace WebShop.Core.ServiceInterface
 {
-    public interface ICarService
+    public interface ICarService : IApplicationService
     {
         Task<Car> Delete(Guid id);
         Task<Car> Add(CarDto dto);
@@ -17,7 +17,5 @@ namespace WebShop.Core.ServiceInterface
         Task<Car> Edit(Guid id);
 
         Task<Car> Update(CarDto dto);
-
-        Task<ExistingFilePathForCar> RemoveImage(ExistingFilePathForCarDto dto);
     }
 }

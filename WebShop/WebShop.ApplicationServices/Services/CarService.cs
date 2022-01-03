@@ -19,23 +19,36 @@ namespace WebShop.ApplicationServices.Services
     {
         private readonly WebShopDbContext _context;
         private readonly IWebHostEnvironment _env;
+        private readonly IFileServices _file;
 
         public CarService
             (
                 WebShopDbContext context,
-                IWebHostEnvironment env
+                IWebHostEnvironment env,
+                IFileServices file
             )
         {
             _context = context;
             _env = env;
+            _file = file;
         }
 
         public async Task<Car> Delete(Guid id)
         {
+            var photos = await _context.ExistingFilePathForCar
+                .Where(x => x.CarId == id)
+                .Select(y => new ExistingFilePathForCarDto
+                {
+                    CarId = y.CarId,
+                    FilePath = y.FilePath,
+                    PhotoId = y.Id
+                })
+                .ToArrayAsync();
+
             var carId = await _context.Car
                 .Include(x => x.ExistingFilePathsForCar)
                 .FirstOrDefaultAsync(x => x.Id == id);
-
+            await _file.RemoveImages(photos);
 
             _context.Car.Remove(carId);
             await _context.SaveChangesAsync();
@@ -56,7 +69,7 @@ namespace WebShop.ApplicationServices.Services
             car.Price = dto.Price;
             car.ModifiedAt = DateTime.Now;
             car.CreatedAt = DateTime.Now;
-            ProcessUploadedFile(dto, car);
+            _file.ProcessUploadedFile(dto, car);
 
             await _context.Car.AddAsync(car);
             await _context.SaveChangesAsync();
@@ -84,7 +97,7 @@ namespace WebShop.ApplicationServices.Services
             car.Price = dto.Price;
             car.ModifiedAt = dto.ModifiedAt;
             car.CreatedAt = dto.CreatedAt;
-            ProcessUploadedFile(dto, car);
+            _file.ProcessUploadedFile(dto, car);
 
             _context.Car.Update(car);
             await _context.SaveChangesAsync();
@@ -92,52 +105,6 @@ namespace WebShop.ApplicationServices.Services
             return car;
         }
 
-        public string ProcessUploadedFile(CarDto dto, Car car)
-        {
-            string uniqueFileName = null;
-
-            if (dto.Files != null && dto.Files.Count > 0)
-            {
-
-                if (!Directory.Exists(_env.WebRootPath + "\\multipleFileUpload\\"))
-                {
-                    Directory.CreateDirectory(_env.WebRootPath + "\\multipleFileUpload\\");
-                }
-
-                foreach (var photo in dto.Files)
-                {
-                    string uploadsFolder = Path.Combine(_env.WebRootPath, "multipleFileUpload");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        photo.CopyTo(fileStream);
-
-                        ExistingFilePathForCar paths = new ExistingFilePathForCar
-                        {
-                            Id = Guid.NewGuid(),
-                            FilePath = uniqueFileName,
-                            CarId = car.Id
-                        };
-
-                        _context.ExistingFilePathForCar.Add(paths);
-                    }
-                }
-
-            }
-            return uniqueFileName;
-        }
-
-        public async Task<ExistingFilePathForCar> RemoveImage(ExistingFilePathForCarDto dto)
-        {
-            var imageId = await _context.ExistingFilePathForCar
-                .FirstOrDefaultAsync(x => x.Id == dto.PhotoId);
-
-            _context.ExistingFilePathForCar.Remove(imageId);
-            await _context.SaveChangesAsync();
-
-            return imageId;
-        }
+        
     }
 }

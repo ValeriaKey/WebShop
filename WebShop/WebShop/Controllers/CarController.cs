@@ -17,16 +17,19 @@ namespace WebShop.Controllers
     {
             private readonly WebShopDbContext _context;
             private readonly ICarService _carService;
+            private readonly IFileServices _fileService;
 
-            public CarController
+        public CarController
                 (
                     WebShopDbContext context,
-                    ICarService carService
+                    ICarService carService,
+                    IFileServices fileService
                 )
             {
                 _context = context;
                 _carService = carService;
-            }
+                _fileService = fileService;
+        }
 
 
             public IActionResult Index()
@@ -164,10 +167,10 @@ namespace WebShop.Controllers
         {
             var dto = new ExistingFilePathForCarDto()
             {
-                PhotoId = model.PhotoId
+                FilePath = model.FilePath
             };
 
-            var image = await _carService.RemoveImage(dto);
+            var image = await _fileService.RemoveImage(dto);
             if (image == null)
             {
                 return RedirectToAction(nameof(Index));
