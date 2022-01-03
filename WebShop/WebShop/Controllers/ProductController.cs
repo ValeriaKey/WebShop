@@ -17,16 +17,19 @@ namespace WebShop.Controllers
     {
         private readonly WebShopDbContext _context;
         private readonly IProductService _productService;
+        private readonly IFileServices _fileService;
 
         public ProductController
             (
             WebShopDbContext context,
-            IProductService productService
+            IProductService productService,
+            IFileServices fileService
 
             )
         {
             _context = context;
             _productService = productService;
+            _fileService = fileService;
         }
         public IActionResult Index()
         {
@@ -156,10 +159,10 @@ namespace WebShop.Controllers
         {
             var dto = new ExistingFilePathDto()
             {
-                PhotoId = model.PhotoId
+                FilePath = model.FilePath
             };
 
-            var image = await _productService.RemoveImage(dto);
+            var image = await _fileService.RemoveImage(dto);
             if (image == null)
             {
                 return RedirectToAction(nameof(Index));

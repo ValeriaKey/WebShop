@@ -9,7 +9,7 @@ using WebShop.Core.Dtos.ProductDto;
 
 namespace WebShop.Core.ServiceInterface
 {
-    public interface IProductService
+    public interface IProductService : IApplicationService
     {
         Task<Product> Delete(Guid id);
 
@@ -18,6 +18,5 @@ namespace WebShop.Core.ServiceInterface
         Task<Product> Edit(Guid id);
 
         Task<Product> Update(ProductDto dto);
-        Task<ExistingFilePath> RemoveImage(ExistingFilePathDto dto);
     }
 }
