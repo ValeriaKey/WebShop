@@ -36,7 +36,7 @@ namespace WebShop.ApplicationServices.Services
 
         public async Task<Spaceship> Add(SpaceshipDto dto)
         {
-            var domain = new Spaceship()
+            Spaceship spaceship = new Spaceship()
             {
                 Id = dto.Id,
                 Name = dto.Name,
@@ -49,10 +49,38 @@ namespace WebShop.ApplicationServices.Services
                 ModifiedAt = dto.ModifiedAt
             };
 
-            await _context.Spaceship.AddAsync(domain);
+            await _context.Spaceship.AddAsync(spaceship);
             await _context.SaveChangesAsync();
 
-            return domain;
+            return spaceship;
+        }
+
+        public async Task<Spaceship> Edit(Guid id)
+        {
+            var result = await _context.Spaceship
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+
+        public async Task<Spaceship> Update(SpaceshipDto dto)
+        {
+            Spaceship spaceship = new Spaceship();
+
+            spaceship.Id = dto.Id;
+            spaceship.Name = dto.Name;
+            spaceship.Type = dto.Type;
+            spaceship.Mass = dto.Mass;
+            spaceship.Price = dto.Price;
+            spaceship.Crew = dto.Crew;
+            spaceship.ConstructedAt = dto.ConstructedAt;
+            spaceship.CreatedAt = dto.CreatedAt;
+            spaceship.ModifiedAt = dto.ModifiedAt;
+
+            _context.Spaceship.Update(spaceship);
+            await _context.SaveChangesAsync();
+
+            return spaceship;
         }
     }
 }

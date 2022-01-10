@@ -65,7 +65,7 @@ namespace WebShop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(SpaceshipViewModel model)
+        public async Task<IActionResult> Add(SpaceshipListViewModel model)
         {
             var dto = new SpaceshipDto()
             {
@@ -89,5 +89,55 @@ namespace WebShop.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var spaceship = await _spaceshipService.Edit(id);
+
+            if (spaceship == null)
+            {
+                return NotFound();
+            }
+
+            var model = new SpaceshipViewModel();
+
+            model.Id = spaceship.Id;
+            model.Name = spaceship.Name;
+            model.Type = spaceship.Type;
+            model.Mass = spaceship.Mass;
+            model.Price = spaceship.Price;
+            model.Crew = spaceship.Crew;
+            model.ConstructedAt = spaceship.ConstructedAt;
+            model.CreatedAt = spaceship.CreatedAt;
+            model.ModifiedAt = spaceship.ModifiedAt;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(SpaceshipViewModel model)
+        {
+            var dto = new SpaceshipDto()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Type = model.Type,
+                Mass = model.Mass,
+                Price = model.Price,
+                Crew = model.Crew,
+                ConstructedAt = model.ConstructedAt,
+                CreatedAt = model.CreatedAt,
+                ModifiedAt = model.ModifiedAt
+            };
+
+            var result = await _spaceshipService.Update(dto);
+
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index), model);
+        }
     }
 }
