@@ -12,7 +12,7 @@ using WebShop.Core.ServiceInterface;
 using WebShop.Data;
 
 namespace WebShop.ApplicationServices.Services
-{
+{/*
     public class FileServiceForSpaceship : IFileServiceForSpaceship
     {
         private readonly WebShopDbContext _context;
@@ -94,5 +94,5 @@ namespace WebShop.ApplicationServices.Services
             }
             return uniqueFileName;
         }
-    }
+    }*/
 }
