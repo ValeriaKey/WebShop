@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,16 @@ namespace WebShop.Core.Dtos.Weather
 {
     public class SunDto
     {
+        [JsonProperty("Rise")]
         public string Rise { get; set; }
-        public int EpochRise { get; set; }
+
+        [JsonProperty("EpochRise")]
+        public Int64 EpochRise { get; set; }
+
+        [JsonProperty("Set")]
         public string Set { get; set; }
-        public int EpochSet { get; set; }
+
+        [JsonProperty("EpochSet")]
+        public Int64 EpochSet { get; set; }
     }
-}
+    }

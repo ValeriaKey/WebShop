@@ -22,69 +22,67 @@ namespace WebShop.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult SearchCity()
         {
-            SearchCity sc = new SearchCity();
+            SearchCity vm = new SearchCity();
 
-            return View(sc);
+            return View(vm);
         }
 
         [HttpPost]
-        public IActionResult City(SearchCity model)
+        public IActionResult SearchCity(SearchCity model)
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("City", "Weather", new { city = model.CityName });
             }
+
             return View(model);
         }
 
-        public IActionResult SearchCity(string city)
+        [HttpGet]
+        public IActionResult City(string city)
         {
-            var weatherResponse = _weatherForecastServices.WeatherResponse(city);
-            WeatherResultViewModel model = new WeatherResultViewModel();
             WeatherResultDto dto = new WeatherResultDto();
-            HeadlineDto headlineDto = new HeadlineDto();
 
-            if (weatherResponse != null)
-            {
+            var weatherResponse = _weatherForecastServices.WeatherDetail(dto);
 
-                model.EffectiveDate = headlineDto.EffectiveDate;
-                model.EffectiveEpochDate = headlineDto.EffectiveEpochDate;
-                model.Severity = headlineDto.Severity;
-                model.Text = headlineDto.Text;
-                model.Category = headlineDto.Category;
-                model.EndDate = headlineDto.EndDate;
-                model.EndEpochDate = headlineDto.EndEpochDate;
-                model.MobileLink = headlineDto.MobileLink;
-                model.Link = headlineDto.Link;
+            CityViewModel model = new CityViewModel();
 
-                model.Date = dto.Date;
-                model.EpochDate = dto.EpochDate;
+            model.EffectiveDate = weatherResponse.Result.EffectiveDate;
+            model.EffectiveEpochDate = weatherResponse.Result.EffectiveEpochDate;
+            model.Severity = weatherResponse.Result.Severity;
+            model.Text = weatherResponse.Result.Text;
+            model.Category = weatherResponse.Result.Category;
+            model.EndDate = weatherResponse.Result.EndDate;
+            model.EndEpochDate = weatherResponse.Result.EndEpochDate;
+            model.MobileLink = weatherResponse.Result.MobileLink;
+            model.Link = weatherResponse.Result.Link;
 
-                model.TempMinValue = dto.TempMinValue;
-                model.TempMinUnit = dto.TempMinUnit;
-                model.TempMinUnitType = dto.TempMinUnitType;
+            model.Date = dto.Date;
+            model.EpochDate = dto.EpochDate;
 
-                model.TempMaxValue = dto.TempMaxValue;
-                model.TempMaxUnit = dto.TempMaxUnit;
-                model.TempMaxUnitType = dto.TempMaxUnitType;
+            model.TempMinValue = dto.TempMinValue;
+            model.TempMinUnit = dto.TempMinUnit;
+            model.TempMinUnitType = dto.TempMinUnitType;
 
-                model.DayIcon = dto.DayIcon;
-                model.DayIconPhrase = dto.DayIconPhrase;
-                model.DayHasPrecipitation = dto.DayHasPrecipitation;
-                model.DayPrecipitationType = dto.DayPrecipitationType;
-                model.DayPrecipitationIntensity = dto.DayPrecipitationIntensity;
+            model.TempMaxValue = dto.TempMaxValue;
+            model.TempMaxUnit = dto.TempMaxUnit;
+            model.TempMaxUnitType = dto.TempMaxUnitType;
 
-                model.NightIcon = dto.NightIcon;
-                model.NightIconPhrase = dto.NightIconPhrase;
-                model.NightHasPrecipitation = dto.NightHasPrecipitation;
-                model.NightPrecipitationType = dto.NightPrecipitationType;
-                model.NightPrecipitationIntensity = dto.NightPrecipitationIntensity;
-            }
+            model.DayIcon = dto.DayIcon;
+            model.DayIconPhrase = dto.DayIconPhrase;
+            model.DayHasPrecipitation = dto.DayHasPrecipitation;
+            model.DayPrecipitationType = dto.DayPrecipitationType;
+            model.DayPrecipitationIntensity = dto.DayPrecipitationIntensity;
+
+            model.NightIcon = dto.NightIcon;
+            model.NightIconPhrase = dto.NightIconPhrase;
+            model.NightHasPrecipitation = dto.NightHasPrecipitation;
+            model.NightPrecipitationType = dto.NightPrecipitationType;
+            model.NightPrecipitationIntensity = dto.NightPrecipitationIntensity;
 
             return View(model);
         }
-
     }
 }

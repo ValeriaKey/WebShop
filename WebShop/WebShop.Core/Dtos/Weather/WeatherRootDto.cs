@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace WebShop.Core.Dtos.Weather
 {
-    public class RealFeelTemperatureShadeDto
+    public class WeatherRootDto
     {
-        public MinimumDto Minimum { get; set; }
-        public MaximumDto Maximum { get; set; }
+        public HeadlineDto Headline { get; set; }
+        public List<DailyForecastsDto> DailyForecasts { get; set; }
+
     }
 }
