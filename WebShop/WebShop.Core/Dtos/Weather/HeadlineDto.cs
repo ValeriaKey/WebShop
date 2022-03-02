@@ -9,16 +9,16 @@ namespace WebShop.Core.Dtos.Weather
 {
     public class HeadlineDto
     {
-        [JsonProperty("EffectiveDate")]
+        [JsonProperty("Headline.EffectiveDate")]
         public string EffectiveDate { get; set; }
 
-        [JsonProperty("EffectiveEpochDate")]
+        [JsonProperty("Headline.EEffectiveEpochDate")]
         public Int64 EffectiveEpochDate { get; set; }
 
-        [JsonProperty("Severity")]
+        [JsonProperty("Headline.Severity")]
         public int Severity { get; set; }
 
-        [JsonProperty("Text")]
+        [JsonProperty("Headline.Text")]
         public string Text { get; set; }
 
         [JsonProperty("Category")]

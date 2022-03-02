@@ -21,7 +21,7 @@ namespace WebShop.ApplicationServices.Services
                // string apikey = "Vh7XvBuQV8AKMFw6wyQLeEgBMxa9GmHd";
                 var url = $"http://dataservice.accuweather.com/forecasts/v1/daily/1day/127964?apikey=Vh7XvBuQV8AKMFw6wyQLeEgBMxa9GmHd&metric=true";
 
-                using (WebClient client = new WebClient())
+                using (WebClient client = new())
                 {
                     string json = client.DownloadString(url);
                     //ainult ühe classi saab deserialiseerida
@@ -49,14 +49,10 @@ namespace WebShop.ApplicationServices.Services
                     dto.DayIcon = weatherInfo.DailyForecasts[0].Day.Icon;
                     dto.DayIconPhrase = weatherInfo.DailyForecasts[0].Day.IconPhrase;
                     dto.DayHasPrecipitation = weatherInfo.DailyForecasts[0].Day.HasPrecipitation;
-                    dto.DayPrecipitationType = weatherInfo.DailyForecasts[0].Day.PrecipitationType;
-                    dto.DayPrecipitationIntensity = weatherInfo.DailyForecasts[0].Day.PrecipitationIntensity;
 
                     dto.NightIcon = weatherInfo.DailyForecasts[0].Night.Icon;
                     dto.NightIconPhrase = weatherInfo.DailyForecasts[0].Night.IconPhrase;
                     dto.NightHasPrecipitation = weatherInfo.DailyForecasts[0].Night.HasPrecipitation;
-                    dto.NightPrecipitationType = weatherInfo.DailyForecasts[0].Night.PrecipitationType;
-                    dto.NightPrecipitationIntensity = weatherInfo.DailyForecasts[0].Night.PrecipitationIntensity;
 
                     var jsonString = new JavaScriptSerializer().Serialize(dto);
                 }
