@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShop.Data", "WebShop.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShop.ApplicationServices", "WebShop.ApplicationServices\WebShop.ApplicationServices.csproj", "{4E00ED87-362A-4132-B76C-45F9C4C1414E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spaceship.Test", "Spaceship.Test\Spaceship.Test.csproj", "{E1A8548A-8427-45EA-B001-E18A837D8EC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4E00ED87-362A-4132-B76C-45F9C4C1414E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E00ED87-362A-4132-B76C-45F9C4C1414E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E00ED87-362A-4132-B76C-45F9C4C1414E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1A8548A-8427-45EA-B001-E18A837D8EC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A8548A-8427-45EA-B001-E18A837D8EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1A8548A-8427-45EA-B001-E18A837D8EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A8548A-8427-45EA-B001-E18A837D8EC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

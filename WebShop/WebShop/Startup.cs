@@ -34,7 +34,7 @@ namespace WebShop
                 options.UseSqlServer(_config["DefaultConnection"]));
             services.AddScoped<IProductService, ProductServices>();
             services.AddScoped<IFileServices, FileServices>();
-           // services.AddScoped<ISpaceshipService, SpaceshipService>();
+            services.AddScoped<ISpaceshipService, SpaceshipService>();
             services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
         }
 
