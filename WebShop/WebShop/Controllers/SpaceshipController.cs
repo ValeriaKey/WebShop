@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,18 +15,20 @@ namespace WebShop.Controllers
     {
         private readonly WebShopDbContext _context;
         private readonly ISpaceshipService _spaceshipService;
+        //private readonly ILogger<SpaceshipController> _logger;
 
         public SpaceshipController
             (
                 WebShopDbContext context,
                 ISpaceshipService spaceshipService
+          //      ILogger logger
             )
             {
             _context = context;
             _spaceshipService = spaceshipService;
+            //_logger = (ILogger<SpaceshipController>)logger;
 
-
-            }
+        }
         public IActionResult Index()
         {
            var result = _context.Spaceship
@@ -92,7 +95,7 @@ namespace WebShop.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var spaceship = await _spaceshipService.Edit(id);
+            var spaceship = await _spaceshipService.GetAsync(id);
 
             if (spaceship == null)
             {

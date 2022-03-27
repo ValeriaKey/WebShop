@@ -8,11 +8,11 @@ using WebShop.Core.Dtos;
 
 namespace WebShop.Core.ServiceInterface
 {
-    public interface ISpaceshipService
+    public interface ISpaceshipService : IApplicationService
     {
         Task<Spaceship> Delete(Guid id);
         Task<Spaceship> Add(SpaceshipDto dto);
-        Task<Spaceship> Edit(Guid id);
+        Task<Spaceship> GetAsync(Guid id);
         Task<Spaceship> Update(SpaceshipDto dto);
 
 

@@ -65,7 +65,7 @@ namespace WebShop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(ProductListViewModel model)
+        public async Task<IActionResult> AddPost(ProductListViewModel model)
         {
             var dto = new ProductDto()
             {
@@ -77,13 +77,13 @@ namespace WebShop.Controllers
                 ModifiedAt = model.ModifiedAt,
                 CreatedAt = model.CreatedAt,
                 Files = model.Files,
-                ExistingFilePaths = model.ExistingFilePaths
-                    .Select(x => new ExistingFilePathDto
-                    {
-                        PhotoId = x.PhotoId,
-                        FilePath = x.FilePath,
-                        ProductId = x.ProductId
-                    }).ToArray()
+               // ExistingFilePaths = model.ExistingFilePaths
+               //    .Select(x => new ExistingFilePathDto
+               //     {
+               //         PhotoId = x.PhotoId,
+               //         FilePath = x.FilePath,
+               //         ProductId = x.ProductId
+               //     }).ToArray()
             };
 
             var result = await _productService.Add(dto);
