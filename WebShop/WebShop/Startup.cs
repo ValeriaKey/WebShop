@@ -36,6 +36,7 @@ namespace WebShop
             services.AddScoped<IFileServices, FileServices>();
             services.AddScoped<ISpaceshipService, SpaceshipService>();
             services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
+            services.AddScoped<IHouseService, HouseService>();
 
             services.AddControllersWithViews();
         }
