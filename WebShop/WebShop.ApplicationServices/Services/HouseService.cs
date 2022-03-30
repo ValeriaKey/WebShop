@@ -83,5 +83,15 @@ namespace WebShop.ApplicationServices.Services
 
             return house;
         }
+
+        // FOR TEST
+     
+        public async Task<House> GetAsync(Guid id)
+        {
+            var result = await _context.House
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
     }
 }

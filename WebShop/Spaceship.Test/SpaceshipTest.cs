@@ -11,8 +11,7 @@ namespace Spaceship.Test
 {
     public class SpaceshipTest : TestBase
     {
-        
-        [Fact]
+        /*        [Fact]
         public async Task Should_AddNewSpaceship_WhenReturnResult()
         {
             string guid = "a1925975-d8fc-4f55-b614-d9b5aa7b4ebe";
@@ -97,9 +96,7 @@ namespace Spaceship.Test
         [Fact]
         public async Task Should_UpdateByIdSpaceship_WhenUpdateSpaceship()
         {
-            string guid = "1ab8c12a-f8da-4e55-ab77-f45378d3adb5";
-            
-            //byte[] array1 = new byte[1000 * 1000 * 3];
+            string guid = "a1925975-d8fc-4f55-b614-d9b5aa7b4ebe";
 
             SpaceshipDto spaceship = new SpaceshipDto();
 
@@ -117,7 +114,6 @@ namespace Spaceship.Test
 
             Assert.NotEmpty((System.Collections.IEnumerable)spaceship);
         } 
-        
-        
+        */
     } 
   }

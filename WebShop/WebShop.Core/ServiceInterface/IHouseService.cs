@@ -15,5 +15,8 @@ namespace WebShop.Core.ServiceInterface
         Task<House> Edit(Guid id);
         Task<House> Update(HouseDto dto);
 
+        // FOR TEST
+        Task<House> GetAsync(Guid id);
+
     }
 }
